@@ -9,36 +9,65 @@ font = pygame.font.SysFont('Sans',50)
 limages = []
 lnames = []
 circs = []
+correctnames = []
+dict_images = {}
+dict_names = {}
+answers = {}
+
 clickedimage = False
+score = 0
 def renderimages():
+    global dict_images
+    global dict_names
     images =['candycrush.jpg','sorry.png','temple_runner.png','subway_surfers.png']
     names = ['Candy crush','Sorry','Temple Runner','Subway Surfers']
-    
-    random.shuffle(names)
     cordinate = 25
     ncord = 25
-    for i in images:
-        image = pygame.transform.scale(pygame.image.load(i),(50,50))
+    random.shuffle(names)
+    for i in range(4):
+        
+        image = pygame.transform.scale(pygame.image.load(images[i]),(50,50))
         screen.blit(image,(50,cordinate))
         imagerect = pygame.Rect(50,cordinate,50,50)
+        name = font.render(names[i],True,'white')
+        screen.blit(name,(400,ncord))
+        namerect = pygame.Rect(400,ncord,300,50)
         limages.append(imagerect)
+        lnames.append(namerect)
+        answers[i] = [imagerect, namerect]
+
+
+        ncord  = ncord+100
+        #dict_images[i] = imagerect
         
         
         cordinate = cordinate+100
+
+    print("DICTIONARY ",answers)
+
+#The image rect is the first value
+
+    
+
+"""   ncord = 25
     for i in names:
-         name = font.render(i,True,'white')
-         screen.blit(name,(400,ncord))
-         namerect = pygame.Rect(400,ncord,300,50)
-         lnames.append(namerect)
-         print('pass')
-         ncord  = ncord+100
-         #textrect = pygame.Rect(400,ncord,)
+        
+        #name = font.render(i,True,'white')
+        screen.blit(name,(400,ncord))
+        namerect = pygame.Rect(400,ncord,300,50)
+        lnames.append(namerect)
+        ncord  = ncord+100
+        #dict_names[i] = [namerect,dict_images[]]
+        """
 
-
-
+   
+#  correctnames.append(namerect)
 
 renderimages()
-print(limages)
+print("EXAMPLE",answers[0][0])
+#print(limages)
+#print(lnames)
+#print(correctnames)
 while True:
    
    for event in pygame.event.get():
@@ -50,35 +79,43 @@ while True:
             
             for i in limages:
                if clickedimage== False:
+    
+                    
                     if i.collidepoint((mx,my)):
-                        
-                        
-        
+
+                        imageclicked = limages.index(i)
+                        print(imageclicked)
                         selectcirc = pygame.draw.circle(screen,'red',(mx,my),radius= 10)
                         pos1 = pygame.mouse.get_pos()
                         clickedimage = True
                   
-                    
+#Check if the image that has been clicked is in the same list index as the 
+#correct name thing. 
                     
         
 
                     
 
         if event.type == pygame.MOUSEBUTTONUP: 
+           
             nx,ny = pygame.mouse.get_pos()    
                
             for i in lnames:
-                i
-                print(i)
-                if i.collidepoint((nx,ny)) :
+                
+                #print(i)
+                if i.collidepoint((nx,ny)):
                     if clickedimage == True:
-                    
+                        nameclicked = correctnames.index(i)
+                       
+                            
                         selectcirc = pygame.draw.circle(screen,'red',(nx,ny),radius= 10)
                         pos2 = pygame.mouse.get_pos()
                         pygame.draw.line(screen,'red',start_pos=pos1,end_pos=pos2,width=10)
+                        score = score+1
                         clickedimage = False
                    
-                       
+#CHECK IF THE NAME CLICKED IS THE KEY OF THE IMAGE IN THE SUB-LIST
+#PUT IMAGE RECT AND NAME RECT IN A LIST, AND DO if *list* in answers[0]
 #Check pos of where clicked to determine whether it is clicked or not. You need to ask if the
 #image name is the same as the name name. use i.collidepoint function and use i.x, i.y
                     
