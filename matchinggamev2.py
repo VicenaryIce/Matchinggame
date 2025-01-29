@@ -22,6 +22,7 @@ def renderimages():
     global dict_names
     global lnames
     images =['candycrush.jpg','sorry.png','temple_runner.png','subway_surfers.png']
+    #random.shuffle(images)
     names = ['Candy crush','Sorry','Temple Runner','Subway Surfers']
     cordinate = 25
     ncord = 25
@@ -49,9 +50,9 @@ def renderimages():
     names,lnames = zip(*combined)
     names= list(names)
     #lnames = list(lnames)
-    for i in range(4):
+    """for i in range(4):
         name = font.render(names[i],True,'white')
-        screen.blit(name,(400,ncord))
+        screen.blit(name,(400,ncord))"""
 
         
 
@@ -82,6 +83,8 @@ print("EXAMPLE",answers[0][0])
 #print(lnames)
 #print(correctnames)
 while True:
+    scoreboard = font.render('SCORE: '+str(score),True,'white')
+    screen.blit(scoreboard,(700,0))
     for event in pygame.event.get():
         if event.type == QUIT:
            pygame.quit()
@@ -124,6 +127,8 @@ while True:
                                 selectcirc = pygame.draw.circle(screen,'red',(nx,ny),radius= 10)
                                 pos2 = pygame.mouse.get_pos()
                                 pygame.draw.line(screen,'red',start_pos=pos1,end_pos=pos2,width=10)
+                                coverup = pygame.Rect(700,0,300,50)
+                                pygame.draw.rect(screen,'black',coverup)
                                 score = score+1
                                 imagesclicked.clear()
                                 clickedimage = False
